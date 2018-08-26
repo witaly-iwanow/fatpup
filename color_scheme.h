@@ -1,0 +1,23 @@
+#ifndef COLOR_SCHEME_H
+#define COLOR_SCHEME_H
+
+#include "rang.h"
+
+static const int lightForegroundScheme =
+#if defined(_MSC_VER)
+    0;
+#else
+    1;
+#endif
+
+static const auto whitePieceColor = lightForegroundScheme ? rang::fg::red : rang::fg::reset;
+static const auto blackPieceColor = lightForegroundScheme ? rang::fg::reset : rang::fg::red;
+
+static const auto emptySquare =
+#if defined(_MSC_VER)
+    "\xb2";
+#else
+    "\xe2\x96\x91"; // utf-8 U+2591 Light Shade
+#endif
+
+#endif // COLOR_SCHEME_H
