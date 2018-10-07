@@ -548,18 +548,12 @@ bool runPossibleKingMovesTests(bool verbose)
     Position pos;
     pos.setEmpty();
 
-    pos.square("a1") = King | White;
     pos.square("a8") = King | White;
-    pos.square("h1") = King | White;
-    pos.square("h8") = King | White;
     pos.square("c6") = Pawn | White;
 
-    pos.square("b6") = King | Black;
     pos.square("c7") = King | Black;
-    pos.square("d4") = King | Black;
-    pos.square("f3") = King | Black;
 
-    std::cout << testTitleColor << "King Test" << rang::fg::reset << std::endl;
+    std::cout << testTitleColor << "King Test #1" << rang::fg::reset << std::endl;
     if (verbose)
         pos.print();
 
@@ -577,7 +571,86 @@ bool runPossibleKingMovesTests(bool verbose)
             std::cout << std::endl;
         }
 
-        if (moves.size() != (side ? 24 : 8))
+        if (moves.size() != (side ? 5 : 1))
+            success = false;    // to do: check if all the moves are correct
+    }
+
+    if (!success)
+    {
+        std::cout << errorMsgColor << "Failed, terminating..." << rang::fg::reset << std::endl;
+        return false;
+    }
+
+
+    std::cout << testTitleColor << "King Test #2" << rang::fg::reset << std::endl;
+    pos.setEmpty();
+
+    pos.square("h5") = King | White;
+    pos.square("h4") = Knight | White;
+    pos.square("h3") = Knight | White;
+
+    pos.square("h1") = King | Black;
+    pos.square("g1") = Queen | Black;
+
+    if (verbose)
+        pos.print();
+
+    for (int side = 0; side < 2; side++)
+    {
+        pos.setWhiteTurn(side == 0);
+        std::vector<Move> moves = pos.possibleMoves();
+
+        if (verbose)
+        {
+            std::cout << "Number of moves for " << (side == 0 ? "white" : "black") << ": " << moves.size() << std::endl;
+            for (size_t i = 0; i < moves.size(); i++)
+                std::cout << "  " << (i + 1) << "/" << moves.size() << " " << pos.moveToString(moves[i]) << std::endl;
+
+            std::cout << std::endl;
+        }
+
+        if (moves.size() != (side ? 21 : 9))
+            success = false;    // to do: check if all the moves are correct
+    }
+
+    if (!success)
+    {
+        std::cout << errorMsgColor << "Failed, terminating..." << rang::fg::reset << std::endl;
+        return false;
+    }
+
+
+    std::cout << testTitleColor << "King Test #3" << rang::fg::reset << std::endl;
+    pos.setEmpty();
+
+    pos.square("d1") = King | White;
+    pos.square("h3") = Rook | White;
+    pos.square("a6") = Bishop | White;
+    pos.square("a2") = Pawn | White;
+
+    pos.square("c3") = King | Black;
+    pos.square("e8") = Rook | Black;
+    pos.square("e3") = Pawn | Black;
+    pos.square("f3") = Pawn | Black;
+
+    if (verbose)
+        pos.print();
+
+    for (int side = 0; side < 2; side++)
+    {
+        pos.setWhiteTurn(side == 0);
+        std::vector<Move> moves = pos.possibleMoves();
+
+        if (verbose)
+        {
+            std::cout << "Number of moves for " << (side == 0 ? "white" : "black") << ": " << moves.size() << std::endl;
+            for (size_t i = 0; i < moves.size(); i++)
+                std::cout << "  " << (i + 1) << "/" << moves.size() << " " << pos.moveToString(moves[i]) << std::endl;
+
+            std::cout << std::endl;
+        }
+
+        if (moves.size() != (side ? 16 : 20))
             success = false;    // to do: check if all the moves are correct
     }
 

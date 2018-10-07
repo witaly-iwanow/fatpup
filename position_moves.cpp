@@ -19,35 +19,205 @@ bool Position::isKingSafe() const
 {
     const unsigned char white_turn = (m_board[0].state() & WhiteTurn) ? White : 0;
 
+    int king_square_idx = -1;
     for (int s_idx = 0; s_idx < BOARD_SIZE * BOARD_SIZE; ++s_idx)
     {
         const Square square = m_board[s_idx];
+        if (white_turn != square.isWhite() && square.piece() == King)
+        {
+            king_square_idx = s_idx;
+            break;
+        }
+    }
+    if (king_square_idx == -1)
+    {
+        // there's no king in some test positions
+        return true;
+    }
 
+    const int king_row_idx = king_square_idx / BOARD_SIZE;
+    const int king_col_idx = king_square_idx - king_row_idx * BOARD_SIZE;
+
+    // left (opponent's king, rook or queen)
+    for (int shift = 1; shift <= king_col_idx; ++shift)
+    {
+        const Square square = m_board[king_square_idx - shift];
         const unsigned char piece = square.piece();
-
         if (piece != Empty)
         {
-            const unsigned char white = square.isWhite();
-
-            if (white_turn == white)
+            if (white_turn == square.isWhite())
             {
-                bool legal = true;
-                switch (piece)
+                if (piece == Rook || piece == Queen)
+                    return false;
+                if (shift == 1 && piece == King)
+                    return false;
+            }
+            break;
+        }
+    }
+
+    // right
+    for (int shift = 1; shift < (BOARD_SIZE - king_col_idx); ++shift)
+    {
+        const Square square = m_board[king_square_idx + shift];
+        const unsigned char piece = square.piece();
+        if (piece != Empty)
+        {
+            if (white_turn == square.isWhite())
+            {
+                if (piece == Rook || piece == Queen)
+                    return false;
+                if (shift == 1 && piece == King)
+                    return false;
+            }
+            break;
+        }
+    }
+
+    // down
+    for (int shift = 1; shift <= king_row_idx; ++shift)
+    {
+        const Square square = m_board[king_square_idx - shift * BOARD_SIZE];
+        const unsigned char piece = square.piece();
+        if (piece != Empty)
+        {
+            if (white_turn == square.isWhite())
+            {
+                if (piece == Rook || piece == Queen)
+                    return false;
+                if (shift == 1 && piece == King)
+                    return false;
+            }
+            break;
+        }
+    }
+
+    // up
+    for (int shift = 1; shift < (BOARD_SIZE - king_row_idx); ++shift)
+    {
+        const Square square = m_board[king_square_idx + shift * BOARD_SIZE];
+        const unsigned char piece = square.piece();
+        if (piece != Empty)
+        {
+            if (white_turn == square.isWhite())
+            {
+                if (piece == Rook || piece == Queen)
+                    return false;
+                if (shift == 1 && piece == King)
+                    return false;
+            }
+            break;
+        }
+    }
+
+    // left-down
+    for (int shift = 1; shift <= king_col_idx && shift <= king_row_idx; ++shift)
+    {
+        const Square square = m_board[king_square_idx - shift - shift * BOARD_SIZE];
+        const unsigned char piece = square.piece();
+        if (piece != Empty)
+        {
+            if (white_turn == square.isWhite())
+            {
+                if (piece == Bishop || piece == Queen)
+                    return false;
+                if (shift == 1)
                 {
-                case Pawn: if (white)
-                               legal = appendPossibleWhitePawnMoves(NULL, s_idx);
-                           else
-                               legal = appendPossibleBlackPawnMoves(NULL, s_idx);
-                    break;
-
-                case Knight: legal = appendPossibleKnightMoves(NULL, s_idx); break;
-                case Bishop: legal = appendPossibleBishopMoves(NULL, s_idx); break;
-                case Rook: legal = appendPossibleRookMoves(NULL, s_idx); break;
-                case Queen: legal = appendPossibleQueenMoves(NULL, s_idx); break;
-                default: legal = appendPossibleKingMoves(NULL, s_idx);
+                    if (piece == King || (white_turn && piece == Pawn))
+                        return false;
                 }
+            }
+            break;
+        }
+    }
 
-                if (!legal)
+    // right-up
+    for (int shift = 1; shift < (BOARD_SIZE - king_col_idx) && shift < (BOARD_SIZE - king_row_idx); ++shift)
+    {
+        const Square square = m_board[king_square_idx + shift + shift * BOARD_SIZE];
+        const unsigned char piece = square.piece();
+        if (piece != Empty)
+        {
+            if (white_turn == square.isWhite())
+            {
+                if (piece == Bishop || piece == Queen)
+                    return false;
+                if (shift == 1)
+                {
+                    if (piece == King || (!white_turn && piece == Pawn))
+                        return false;
+                }
+            }
+            break;
+        }
+    }
+
+    // left-up
+    for (int shift = 1; shift <= king_col_idx && shift < (BOARD_SIZE - king_row_idx); ++shift)
+    {
+        const Square square = m_board[king_square_idx - shift + shift * BOARD_SIZE];
+        const unsigned char piece = square.piece();
+        if (piece != Empty)
+        {
+            if (white_turn == square.isWhite())
+            {
+                if (piece == Bishop || piece == Queen)
+                    return false;
+                if (shift == 1)
+                {
+                    if (piece == King || (!white_turn && piece == Pawn))
+                        return false;
+                }
+            }
+            break;
+        }
+    }
+
+    // right-down
+    for (int shift = 1; shift < (BOARD_SIZE - king_col_idx) && shift <= king_row_idx; ++shift)
+    {
+        const Square square = m_board[king_square_idx + shift - shift * BOARD_SIZE];
+        const unsigned char piece = square.piece();
+        if (piece != Empty)
+        {
+            if (white_turn == square.isWhite())
+            {
+                if (piece == Bishop || piece == Queen)
+                    return false;
+                if (shift == 1)
+                {
+                    if (piece == King || (white_turn && piece == Pawn))
+                        return false;
+                }
+            }
+            break;
+        }
+    }
+
+    // and the knights
+    static const int knight_move_deltas[2 * 8] =
+    {
+        -2, -1,
+        -2,  1,
+        -1, -2,
+        -1,  2,
+        1, -2,
+        1,  2,
+        2, -1,
+        2,  1
+    };
+
+    for (int pos_move_idx = 0; pos_move_idx < 8; ++pos_move_idx)
+    {
+        const int knight_row_idx = king_row_idx + knight_move_deltas[pos_move_idx * 2];
+        if (knight_row_idx >= 0 && knight_row_idx < BOARD_SIZE)
+        {
+            const int knight_col_idx = king_col_idx + knight_move_deltas[pos_move_idx * 2 + 1];
+            if (knight_col_idx >= 0 && knight_col_idx < BOARD_SIZE)
+            {
+                // ok, we're inside the board, check if the square's empty or contains an opponent's knight
+                const Square knight_square = m_board[knight_row_idx * BOARD_SIZE + knight_col_idx];
+                if (knight_square.piece() == Knight && knight_square.isWhite() == white_turn)
                     return false;
             }
         }
@@ -413,10 +583,10 @@ bool Position::appendPossibleKnightMoves(std::vector<Move>* moves, int square_id
     for (int pos_move_idx = 0; pos_move_idx < 8; ++pos_move_idx)
     {
         const int new_row_idx = row_idx + knight_move_deltas[pos_move_idx * 2];
-        if (new_row_idx >= 0 && new_row_idx <= (BOARD_SIZE - 1))
+        if (new_row_idx >= 0 && new_row_idx < BOARD_SIZE)
         {
             const int new_col_idx = col_idx + knight_move_deltas[pos_move_idx * 2 + 1];
-            if (new_col_idx >= 0 && new_col_idx <= (BOARD_SIZE - 1))
+            if (new_col_idx >= 0 && new_col_idx < BOARD_SIZE)
             {
                 // ok, we're inside the board, check if the square's empty or contains an enemy piece
                 const Square new_square = m_board[new_row_idx * BOARD_SIZE + new_col_idx];
@@ -728,11 +898,11 @@ bool Position::appendPossibleKingMoves(std::vector<Move>* moves, int square_idx)
 
     for (int new_row_idx = (row_idx - 1); new_row_idx <= (row_idx + 1); ++new_row_idx)
     {
-        if (new_row_idx >= 0 && new_row_idx <= (BOARD_SIZE - 1))
+        if (new_row_idx >= 0 && new_row_idx < BOARD_SIZE)
         {
             for (int new_col_idx = (col_idx - 1); new_col_idx <= (col_idx + 1); ++new_col_idx)
             {
-                if (new_col_idx >= 0 && new_col_idx <= (BOARD_SIZE - 1) &&
+                if (new_col_idx >= 0 && new_col_idx < BOARD_SIZE &&
                    (new_row_idx != row_idx || new_col_idx != col_idx))
                 {
                     // ok, we're inside the board and it's not the original location, check if the square's empty or contains an enemy piece
