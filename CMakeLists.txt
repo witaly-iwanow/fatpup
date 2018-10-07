@@ -3,9 +3,10 @@ PROJECT(fatpup)
 
 IF (NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Release)
+    ADD_DEFINITIONS(-DNDEBUG)
 ENDIF()
 
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+SET(CMAKE_CXX_FLAGS_RELEASE "-O3")
 SET(CMAKE_CXX_STANDARD 11)
 
 SET(FATPUP_HEADERS move.h performance_tests.h position.h possible_moves_tests.h rang.h square.h)
