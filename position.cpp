@@ -117,6 +117,7 @@ const Square& Position::square(const std::string& square_name) const
 std::vector<Move> Position::possibleMoves() const
 {
     std::vector<Move> all_moves;
+    all_moves.reserve(64);
     const unsigned char white_turn = (m_board[0].state() & WhiteTurn) ? White : 0;
 
     for (int s_idx = 0; s_idx < BOARD_SIZE * BOARD_SIZE; ++s_idx)

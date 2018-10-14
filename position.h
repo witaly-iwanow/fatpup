@@ -57,7 +57,7 @@ protected:
     bool                legalMovesPresent() const;
     int                 evaluateMaterial() const;
 
-    // these return false is the position is invalid (the opponent's king can be captured)
+    // these return false if the position is invalid (the opponent's king can be captured)
     bool                appendPossibleWhitePawnMoves(std::vector<Move>* moves, int square_idx) const;
     bool                appendPossibleBlackPawnMoves(std::vector<Move>* moves, int square_idx) const;
     bool                appendPossibleKnightMoves(std::vector<Move>* moves, int square_idx) const;
