@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "position.h"
+#include "solver.h"
 
 void runEvaluationPerformanceTests()
 {
@@ -108,4 +109,33 @@ void runPossibleMovesPerformanceTests()
 
     std::cout << "Total possible move calculation time " << executedIn << " ms, check result: " << evalAcc <<
     ", kops: " << (numLoops * 4 / executedIn) << std::endl;
+}
+
+void runFindBestMoveTests()
+{
+    Position pos;
+    pos.setEmpty();
+
+    pos.square("c6") = King | White;
+    pos.square("d5") = Queen | White;
+    pos.square("c7") = Pawn | White;
+
+    pos.square("a8") = King | Black;
+    pos.square("g8") = Rook | Black;
+    pos.square("d8") = Bishop | Black;
+
+    pos.setWhiteTurn(true);
+
+    Solver* captureSolver = Solver::create("capture", pos);
+    if (captureSolver)
+    {
+        const Move bestWhiteMove = captureSolver->getBestMove();
+        std::cout << "[capture solver] best move (white): " << pos.moveToString(bestWhiteMove) << std::endl;
+
+        captureSolver->moveDone(bestWhiteMove);
+        const Move bestBlackMove = captureSolver->getBestMove();
+        std::cout << "[capture solver] best move (black): " << (pos + bestWhiteMove).moveToString(bestBlackMove) << std::endl;
+
+        delete captureSolver;
+    }
 }

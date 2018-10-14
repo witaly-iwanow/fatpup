@@ -9,11 +9,10 @@ int main(int argc, char *argv[])
 {
     //runPossibleMovesTests(true);
 
-    runEvaluationPerformanceTests();
-    runPossibleMovesPerformanceTests();
+    //runEvaluationPerformanceTests();
+    //runPossibleMovesPerformanceTests();
 
-    // to do
-    //runFindBestMoveTests();
+    runFindBestMoveTests();
 
     return 0;
 }

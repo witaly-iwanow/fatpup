@@ -3,5 +3,6 @@
 
 void runEvaluationPerformanceTests();
 void runPossibleMovesPerformanceTests();
+void runFindBestMoveTests();
 
 #endif  // PERFORMANCE_TESTS_H
