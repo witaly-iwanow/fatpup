@@ -5,6 +5,7 @@
 
 void runEvaluationPerformanceTests()
 {
+/*
     static const int numPositions = 2;
     Position positions[numPositions];
 
@@ -53,6 +54,7 @@ void runEvaluationPerformanceTests()
 
     std::cout << "Total evaluation time " << executedIn << " ms, check result: " << evalAcc <<
     ", keps: " << (numLoops * 4 / executedIn) << std::endl;
+*/
 }
 
 void runPossibleMovesPerformanceTests()
@@ -117,25 +119,30 @@ void runFindBestMoveTests()
     pos.setEmpty();
 
     pos.square("c6") = King | White;
-    pos.square("d5") = Queen | White;
+    pos.square("c8") = Knight | White;
+    pos.square("b6") = Pawn | White;
     pos.square("c7") = Pawn | White;
 
     pos.square("a8") = King | Black;
-    pos.square("g8") = Rook | Black;
-    pos.square("d8") = Bishop | Black;
+    pos.square("d8") = Rook | Black;
+    pos.square("e7") = Bishop | Black;
+    pos.square("b5") = Knight | Black;
 
-    pos.setWhiteTurn(true);
-
-    Solver* captureSolver = Solver::create("capture", pos);
-    if (captureSolver)
+    std::string solverNames[] = { "capture", "checkmate" };
+    for (const auto& solverName: solverNames)
     {
-        const Move bestWhiteMove = captureSolver->getBestMove();
-        std::cout << "[capture solver] best move (white): " << pos.moveToString(bestWhiteMove) << std::endl;
+        for (int wb = 0; wb < 2; ++wb)
+        {
+            pos.setWhiteTurn(wb == 0);
 
-        captureSolver->moveDone(bestWhiteMove);
-        const Move bestBlackMove = captureSolver->getBestMove();
-        std::cout << "[capture solver] best move (black): " << (pos + bestWhiteMove).moveToString(bestBlackMove) << std::endl;
+            Solver* solver = Solver::create(solverName, pos);
+            if (solver)
+            {
+                const Move bestMove = solver->getBestMove();
+                std::cout << "[" << solverName << " solver] best move (" << (wb == 0 ? "white" : "black") << "): " << pos.moveToString(bestMove) << std::endl;
 
-        delete captureSolver;
+                delete solver;
+            }
+        }
     }
 }

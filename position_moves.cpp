@@ -279,6 +279,7 @@ bool Position::isMoveLegal(Move move) const
 bool Position::appendPossibleWhitePawnMoves(std::vector<Move>* moves, int square_idx) const
 {
     const Square square = m_board[square_idx];
+    (void)square;
     assert(square.piece() == Pawn);
     assert(square.isWhite());
 
@@ -419,6 +420,7 @@ bool Position::appendPossibleWhitePawnMoves(std::vector<Move>* moves, int square
 bool Position::appendPossibleBlackPawnMoves(std::vector<Move>* moves, int square_idx) const
 {
     const Square square = m_board[square_idx];
+    (void)square;
     assert(square.piece() == Pawn);
     assert(!square.isWhite());
 

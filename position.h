@@ -20,8 +20,6 @@ public:
     void                setEmpty();
     void                print() const;
 
-    float               evaluate() const;
-
     std::vector<Move>   possibleMoves() const;
 
     void                moveDone(Move move);
@@ -55,7 +53,6 @@ public:
 protected:
     bool                isKingSafe() const;
     bool                legalMovesPresent() const;
-    int                 evaluateMaterial() const;
 
     // these return false if the position is invalid (the opponent's king can be captured)
     bool                appendPossibleWhitePawnMoves(std::vector<Move>* moves, int square_idx) const;
