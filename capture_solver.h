@@ -1,24 +1,27 @@
-#ifndef CAPTURE_SOLVER_H
-#define CAPTURE_SOLVER_H
+#ifndef FATPUP_CAPTURE_SOLVER_H
+#define FATPUP_CAPTURE_SOLVER_H
 
 #include "solver.h"
 
-class CaptureSolver: public Solver
+namespace fatpup
 {
-public:
-    CaptureSolver(const Position& pos);
+    class CaptureSolver: public Solver
+    {
+    public:
+        CaptureSolver(const Position& pos);
 
-    void start() override {}
-    void stop() override {}
+        void start() override {}
+        void stop() override {}
 
-    Move getBestMove() override { return _bestMove; }
-    void moveDone(Move move) override;
+        Move getBestMove() override { return _bestMove; }
+        void moveDone(Move move) override;
 
-private:
-    void findBestMove();
+    private:
+        void findBestMove();
 
-    Position _pos;
-    Move _bestMove;
-};
+        Position _pos;
+        Move _bestMove;
+    };
+}   // namespace fatpup
 
-#endif // CAPTURE_SOLVER_H
+#endif // FATPUP_CAPTURE_SOLVER_H

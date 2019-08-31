@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     //runEvaluationPerformanceTests();
     //runPossibleMovesPerformanceTests();
 
-    runFindBestMoveTests();
+    fatpup::runFindBestMoveTests();
 
     return 0;
 }

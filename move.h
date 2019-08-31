@@ -1,41 +1,43 @@
-#ifndef MOVE_H
-#define MOVE_H
+#ifndef FATPUP_MOVE_H
+#define FATPUP_MOVE_H
 
 #include <string>
 
-
-union Move
+namespace fatpup
 {
-    Move() : raw_block(0) {}
-
-    Move(unsigned int src_square_row, unsigned int src_square_col, unsigned int dst_square_row, unsigned int dst_square_col) :
-        raw_block(0)
+    union Move
     {
-        fields.src_row = src_square_row;
-        fields.src_col = src_square_col;
-        fields.dst_row = dst_square_row;
-        fields.dst_col = dst_square_col;
-    }
+        Move() : raw_block(0) {}
 
-    // for debugging/testing purposes, so that you can set a position up like this: "pos += Move("e2e4");"
-    // castling, en passant capturings and promotions are not currently supported
-    Move(const std::string& move_string);
+        Move(unsigned int src_square_row, unsigned int src_square_col, unsigned int dst_square_row, unsigned int dst_square_col) :
+            raw_block(0)
+        {
+            fields.src_row = src_square_row;
+            fields.src_col = src_square_col;
+            fields.dst_row = dst_square_row;
+            fields.dst_col = dst_square_col;
+        }
 
-    struct
-    {
-        unsigned int    src_row : 3;
-        unsigned int    src_col : 3;
-        unsigned int    dst_row : 3;
-        unsigned int    dst_col : 3;
+        // for debugging/testing purposes, so that you can set a position up like this: "pos += Move("e2e4");"
+        // castling, en passant capturings and promotions are not currently supported
+        Move(const std::string& move_string);
 
-        // castling case
-        unsigned int    rook_src_col : 3;
-        unsigned int    rook_dst_col : 3;
+        struct
+        {
+            unsigned int    src_row : 3;
+            unsigned int    src_col : 3;
+            unsigned int    dst_row : 3;
+            unsigned int    dst_col : 3;
 
-        unsigned int    promoted_to : 3;
-    }                   fields;
+            // castling case
+            unsigned int    rook_src_col : 3;
+            unsigned int    rook_dst_col : 3;
 
-    unsigned int        raw_block;
-};
+            unsigned int    promoted_to : 3;
+        }                   fields;
 
-#endif // MOVE_H
+        unsigned int        raw_block;
+    };
+}   // namespace fatpup
+
+#endif // FATPUP_MOVE_H
