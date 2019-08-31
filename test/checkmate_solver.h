@@ -1,27 +1,24 @@
-#ifndef FATPUP_CHECKMATE_SOLVER_H
-#define FATPUP_CHECKMATE_SOLVER_H
+#ifndef FATPUP_CLI_CHECKMATE_SOLVER_H
+#define FATPUP_CLI_CHECKMATE_SOLVER_H
 
 #include "solver.h"
 
-namespace fatpup
+class CheckmateSolver: public Solver
 {
-    class CheckmateSolver: public Solver
-    {
-    public:
-        CheckmateSolver(const Position& pos);
+public:
+    CheckmateSolver(const fatpup::Position& pos);
 
-        void start() override {}
-        void stop() override {}
+    void start() override {}
+    void stop() override {}
 
-        Move getBestMove() override { return _bestMove; }
-        void moveDone(Move move) override;
+    fatpup::Move getBestMove() override { return _bestMove; }
+    void moveDone(fatpup::Move move) override;
 
-    private:
-        void findBestMove();
+private:
+    void findBestMove();
 
-        Position _pos;
-        Move _bestMove;
-    };
-}   // namespace fatpup
+    fatpup::Position _pos;
+    fatpup::Move _bestMove;
+};
 
-#endif // FATPUP_CHECKMATE_SOLVER_H
+#endif // FATPUP_CLI_CHECKMATE_SOLVER_H

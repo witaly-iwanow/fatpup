@@ -7,12 +7,12 @@
 
 int main(int argc, char *argv[])
 {
-    //runPossibleMovesTests(true);
+    runPossibleMovesTests(true);
 
     //runEvaluationPerformanceTests();
     //runPossibleMovesPerformanceTests();
 
-    fatpup::runFindBestMoveTests();
+    runFindBestMoveTests();
 
     return 0;
 }

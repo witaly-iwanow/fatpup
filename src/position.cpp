@@ -2,7 +2,6 @@
 #include <cassert>
 
 #include "position.h"
-#include "color_scheme.h"
 
 namespace fatpup
 {
@@ -56,47 +55,6 @@ namespace fatpup
         m_board[0].setFlagToOne(WhiteTurn);
     }
 
-    void Position::print() const
-    {
-        for (int row_idx = BOARD_SIZE - 1; row_idx >= 0; --row_idx)
-        {
-            std::cout << (row_idx + 1) << " ";
-            for (int col_idx = 0; col_idx < BOARD_SIZE; ++col_idx)
-            {
-                const Square square = m_board[row_idx * BOARD_SIZE + col_idx];
-                const unsigned char piece = square.piece();
-
-                if (piece == Empty)
-                {
-                    if (square.isFlagSet(EnPassant))
-                        std::cout << "*";
-                    else
-                        std::cout << (((row_idx ^ col_idx ^ lightForegroundScheme) & 1) ? emptySquare : " ");
-                }
-                else
-                {
-                    std::cout << (square.isWhite() ? whitePieceColor : blackPieceColor);
-
-                    switch (piece)
-                    {
-                    case Pawn: std::cout << "p"; break;
-                    case Knight: std::cout << "N"; break;
-                    case Bishop: std::cout << "B"; break;
-                    case Rook: std::cout << "R"; break;
-                    case Queen: std::cout << "Q"; break;
-                    default: std::cout << "K";
-                    }
-
-                    std::cout << rang::fg::reset;
-                }
-            }
-
-            std::cout << "\n";
-        }
-
-        std::cout << "  ABCDEFGH" << std::endl;
-    }
-
     Square& Position::square(const std::string& square_name)
     {
         assert(square_name.length() == 2);
@@ -146,14 +104,6 @@ namespace fatpup
                 }
             }
         }
-
-    #if 0
-        printf("Num of pos moves: %d\n", all_moves.size());
-        for (int m_idx = 0; m_idx < all_moves.size(); ++m_idx)
-        {
-            printf("%d.%d-%d.%d\n", all_moves[m_idx].fields.src_row, all_moves[m_idx].fields.src_col, all_moves[m_idx].fields.dst_row, all_moves[m_idx].fields.dst_col);
-        }
-    #endif
 
         return all_moves;
     }

@@ -1,11 +1,8 @@
-#ifndef FATPUP_PERFORMANCE_TESTS_H
-#define FATPUP_PERFORMANCE_TESTS_H
+#ifndef FATPUP_CLI_PERFORMANCE_TESTS_H
+#define FATPUP_CLI_PERFORMANCE_TESTS_H
 
-namespace fatpup
-{
-    void runEvaluationPerformanceTests();
-    void runPossibleMovesPerformanceTests();
-    void runFindBestMoveTests();
-}   // namespace fatpup
+void runEvaluationPerformanceTests();
+void runPossibleMovesPerformanceTests();
+void runFindBestMoveTests();
 
-#endif  // FATPUP_PERFORMANCE_TESTS_H
+#endif  // FATPUP_CLI_PERFORMANCE_TESTS_H

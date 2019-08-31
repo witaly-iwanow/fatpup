@@ -20,7 +20,6 @@ namespace fatpup
 
         void                setInitial();
         void                setEmpty();
-        void                print() const;
 
         std::vector<Move>   possibleMoves() const;
 

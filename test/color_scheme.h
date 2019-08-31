@@ -1,5 +1,5 @@
-#ifndef COLOR_SCHEME_H
-#define COLOR_SCHEME_H
+#ifndef FATPUP_CLI_COLOR_SCHEME_H
+#define FATPUP_CLI_COLOR_SCHEME_H
 
 #include "rang.h"
 
@@ -20,4 +20,4 @@ static const auto emptySquare =
     "\xe2\x96\x91"; // utf-8 U+2591 Light Shade
 #endif
 
-#endif // COLOR_SCHEME_H
+#endif // FATPUP_CLI_COLOR_SCHEME_H
