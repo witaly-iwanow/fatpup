@@ -7,9 +7,9 @@ namespace fatpup
 {
     union Move
     {
-        Move() : raw_block(0) {}
+        Move(): raw_block(0) {}
 
-        Move(unsigned int src_square_row, unsigned int src_square_col, unsigned int dst_square_row, unsigned int dst_square_col) :
+        Move(unsigned int src_square_row, unsigned int src_square_col, unsigned int dst_square_row, unsigned int dst_square_col):
             raw_block(0)
         {
             fields.src_row = src_square_row;
