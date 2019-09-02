@@ -41,6 +41,7 @@ namespace fatpup
     {
         Black = 0,          // just a stub for consistency (square1 = Pawn | White; square2 = Pawn | Black;)
         White = 8,          // indicates a white piece
+        ColorMask = 8,
         CanCastle = 16,
         EnPassant = 32,
         WhiteTurn = 64      // only set on A1 square (m_board[0])
@@ -63,6 +64,7 @@ namespace fatpup
         void                    toggleFlag(unsigned char flag) { m_state ^= flag; }
 
         unsigned char           piece() const { return (m_state & PieceMask); }
+        unsigned char           pieceWithColor() const { return (m_state & (PieceMask | ColorMask)); }
         unsigned char           isWhite() const { return (m_state & White); }
 
         int value() const
