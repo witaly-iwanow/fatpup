@@ -108,13 +108,25 @@ namespace fatpup
         return all_moves;
     }
 
-    bool Position::isPossibleMove(Move move) const
+    std::vector<Move> Position::possibleMoves(int src_row, int src_col, int dst_row, int dst_col) const
     {
-        std::vector<Move> possible_moves;
-        possible_moves.reserve(32);
+        // we cannot just create a move with (src_row, src_col, dst_row, dst_col)
+        // and return it to the caller if it's legal. There are castlings which
+        // require Move::fields::rook_src/dst_col set correctly and pawn promotions
+
+        // we'll have 4 moves in the case of promotion - white pawn move a7a8 can be
+        // a7a8 -> queen, a7a8 -> rook, a7a8 -> bishop, a7a8 -> knight. But in most
+        // cases it will be only one move, or even zero if the move is illegal or the
+        // source square is empty
+        std::vector<Move> moves;
+        moves.reserve(4);
+
+        // possible moves of the piece at (src_row, dst_row)
+        std::vector<Move> src_possible_moves;
+        src_possible_moves.reserve(32);
         const unsigned char white_turn = (m_board[0].state() & WhiteTurn) ? White : 0;
 
-        const int s_idx = move.fields.src_row * BOARD_SIZE + move.fields.src_col;
+        const int s_idx = src_row * BOARD_SIZE + src_col;
         const Square square = m_board[s_idx];
         const unsigned char piece = square.piece();
 
@@ -128,29 +140,29 @@ namespace fatpup
                 switch (piece)
                 {
                 case Pawn: if (white)
-                                legal = appendPossibleWhitePawnMoves(&possible_moves, s_idx);
+                                legal = appendPossibleWhitePawnMoves(&src_possible_moves, s_idx);
                             else
-                                legal = appendPossibleBlackPawnMoves(&possible_moves, s_idx);
+                                legal = appendPossibleBlackPawnMoves(&src_possible_moves, s_idx);
                             break;
 
-                case Knight: legal = appendPossibleKnightMoves(&possible_moves, s_idx); break;
-                case Bishop: legal = appendPossibleBishopMoves(&possible_moves, s_idx); break;
-                case Rook: legal = appendPossibleRookMoves(&possible_moves, s_idx); break;
-                case Queen: legal = appendPossibleQueenMoves(&possible_moves, s_idx); break;
-                default: legal = appendPossibleKingMoves(&possible_moves, s_idx);
-                            appendPossibleCastlings(&possible_moves, s_idx);
+                case Knight: legal = appendPossibleKnightMoves(&src_possible_moves, s_idx); break;
+                case Bishop: legal = appendPossibleBishopMoves(&src_possible_moves, s_idx); break;
+                case Rook: legal = appendPossibleRookMoves(&src_possible_moves, s_idx); break;
+                case Queen: legal = appendPossibleQueenMoves(&src_possible_moves, s_idx); break;
+                default: legal = appendPossibleKingMoves(&src_possible_moves, s_idx);
+                            appendPossibleCastlings(&src_possible_moves, s_idx);
                 }
                 assert(legal);
 
-                for (const auto m: possible_moves)
+                for (const auto m: src_possible_moves)
                 {
-                    if (move.fields.dst_row == m.fields.dst_row && move.fields.dst_col == m.fields.dst_col)
-                        return true;
+                    if (dst_row == m.fields.dst_row && dst_col == m.fields.dst_col)
+                        moves.push_back(m);
                 }
             }
         }
 
-        return false;
+        return moves;
     }
 
     void Position::moveDone(Move move)

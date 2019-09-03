@@ -22,7 +22,7 @@ namespace fatpup
         void                setEmpty();
 
         std::vector<Move>   possibleMoves() const;
-        bool                isPossibleMove(Move move) const;
+        std::vector<Move>   possibleMoves(int src_row, int src_col, int dst_row, int dst_col) const;
 
         void                moveDone(Move move);
 
