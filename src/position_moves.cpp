@@ -303,15 +303,15 @@ namespace fatpup
 
                     if (row_idx == (BOARD_SIZE - 2))
                     {
-                        moves->back().fields.promoted_to = Knight;
-
-                        move.fields.promoted_to = Bishop;
-                        moves->push_back(move);
+                        moves->back().fields.promoted_to = Queen;
 
                         move.fields.promoted_to = Rook;
                         moves->push_back(move);
 
-                        move.fields.promoted_to = Queen;
+                        move.fields.promoted_to = Bishop;
+                        moves->push_back(move);
+
+                        move.fields.promoted_to = Knight;
                         moves->push_back(move);
 
                         move.fields.promoted_to = 0;
@@ -351,15 +351,15 @@ namespace fatpup
 
                         if (row_idx == (BOARD_SIZE - 2))
                         {
-                            moves->back().fields.promoted_to = Knight;
-
-                            move.fields.promoted_to = Bishop;
-                            moves->push_back(move);
+                            moves->back().fields.promoted_to = Queen;
 
                             move.fields.promoted_to = Rook;
                             moves->push_back(move);
 
-                            move.fields.promoted_to = Queen;
+                            move.fields.promoted_to = Bishop;
+                            moves->push_back(move);
+
+                            move.fields.promoted_to = Knight;
                             moves->push_back(move);
 
                             move.fields.promoted_to = 0;
@@ -392,15 +392,15 @@ namespace fatpup
 
                         if (row_idx == (BOARD_SIZE - 2))
                         {
-                            moves->back().fields.promoted_to = Knight;
-
-                            move.fields.promoted_to = Bishop;
-                            moves->push_back(move);
+                            moves->back().fields.promoted_to = Queen;
 
                             move.fields.promoted_to = Rook;
                             moves->push_back(move);
 
-                            move.fields.promoted_to = Queen;
+                            move.fields.promoted_to = Bishop;
+                            moves->push_back(move);
+
+                            move.fields.promoted_to = Knight;
                             moves->push_back(move);
 
                             move.fields.promoted_to = 0;
@@ -443,15 +443,15 @@ namespace fatpup
 
                     if (row_idx == 1)
                     {
-                        moves->back().fields.promoted_to = Knight;
-
-                        move.fields.promoted_to = Bishop;
-                        moves->push_back(move);
+                        moves->back().fields.promoted_to = Queen;
 
                         move.fields.promoted_to = Rook;
                         moves->push_back(move);
 
-                        move.fields.promoted_to = Queen;
+                        move.fields.promoted_to = Bishop;
+                        moves->push_back(move);
+
+                        move.fields.promoted_to = Knight;
                         moves->push_back(move);
 
                         move.fields.promoted_to = 0;
@@ -491,15 +491,15 @@ namespace fatpup
 
                         if (row_idx == 1)
                         {
-                            moves->back().fields.promoted_to = Knight;
-
-                            move.fields.promoted_to = Bishop;
-                            moves->push_back(move);
+                            moves->back().fields.promoted_to = Queen;
 
                             move.fields.promoted_to = Rook;
                             moves->push_back(move);
 
-                            move.fields.promoted_to = Queen;
+                            move.fields.promoted_to = Bishop;
+                            moves->push_back(move);
+
+                            move.fields.promoted_to = Knight;
                             moves->push_back(move);
 
                             move.fields.promoted_to = 0;
@@ -532,15 +532,15 @@ namespace fatpup
 
                         if (row_idx == 1)
                         {
-                            moves->back().fields.promoted_to = Knight;
-
-                            move.fields.promoted_to = Bishop;
-                            moves->push_back(move);
+                            moves->back().fields.promoted_to = Queen;
 
                             move.fields.promoted_to = Rook;
                             moves->push_back(move);
 
-                            move.fields.promoted_to = Queen;
+                            move.fields.promoted_to = Bishop;
+                            moves->push_back(move);
+
+                            move.fields.promoted_to = Knight;
                             moves->push_back(move);
 
                             move.fields.promoted_to = 0;
