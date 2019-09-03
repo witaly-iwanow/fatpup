@@ -108,6 +108,51 @@ namespace fatpup
         return all_moves;
     }
 
+    bool Position::isPossibleMove(Move move) const
+    {
+        std::vector<Move> possible_moves;
+        possible_moves.reserve(32);
+        const unsigned char white_turn = (m_board[0].state() & WhiteTurn) ? White : 0;
+
+        const int s_idx = move.fields.src_row * BOARD_SIZE + move.fields.src_col;
+        const Square square = m_board[s_idx];
+        const unsigned char piece = square.piece();
+
+        if (piece != Empty)
+        {
+            const unsigned char white = square.isWhite();
+
+            if (white_turn == white)
+            {
+                bool legal = true;
+                switch (piece)
+                {
+                case Pawn: if (white)
+                                legal = appendPossibleWhitePawnMoves(&possible_moves, s_idx);
+                            else
+                                legal = appendPossibleBlackPawnMoves(&possible_moves, s_idx);
+                            break;
+
+                case Knight: legal = appendPossibleKnightMoves(&possible_moves, s_idx); break;
+                case Bishop: legal = appendPossibleBishopMoves(&possible_moves, s_idx); break;
+                case Rook: legal = appendPossibleRookMoves(&possible_moves, s_idx); break;
+                case Queen: legal = appendPossibleQueenMoves(&possible_moves, s_idx); break;
+                default: legal = appendPossibleKingMoves(&possible_moves, s_idx);
+                            appendPossibleCastlings(&possible_moves, s_idx);
+                }
+                assert(legal);
+
+                for (const auto m: possible_moves)
+                {
+                    if (move.fields.dst_row == m.fields.dst_row && move.fields.dst_col == m.fields.dst_col)
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     void Position::moveDone(Move move)
     {
         const unsigned char white_turn = (m_board[0].state() & WhiteTurn);

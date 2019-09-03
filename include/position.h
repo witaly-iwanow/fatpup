@@ -22,6 +22,7 @@ namespace fatpup
         void                setEmpty();
 
         std::vector<Move>   possibleMoves() const;
+        bool                isPossibleMove(Move move) const;
 
         void                moveDone(Move move);
 
@@ -43,7 +44,6 @@ namespace fatpup
         enum class State { Normal, Check, Checkmate, Stalemate, Illegal };
         State               getState() const;
 
-        bool                isMoveLegal(Move move) const;
         std::string         moveToString(Move move) const;
         std::string         moveToStringPGN(Move move) const;
 
@@ -52,6 +52,7 @@ namespace fatpup
         // void exportToFEN() / importFromFEN()
 
     protected:
+        bool                isMoveLegal(Move move) const;
         bool                isKingSafe() const;
         bool                legalMovesPresent() const;
 
