@@ -13,10 +13,16 @@ SET(CMAKE_CXX_STANDARD 11)
 
 INCLUDE_DIRECTORIES(include)
 
-SET(FATPUP_HEADERS include/move.h include/position.h include/square.h)
+SET(FATPUP_HEADERS include/fatpup/move.h include/fatpup/position.h include/fatpup/square.h)
 SET(FATPUP_SOURCES src/move.cpp src/position.cpp src/position_moves.cpp src/position_utils.cpp)
 
 ADD_LIBRARY(fatpup STATIC ${FATPUP_HEADERS} ${FATPUP_SOURCES})
+
+GET_DIRECTORY_PROPERTY(hasParent PARENT_DIRECTORY)
+IF (hasParent)
+    SET(FATPUP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include PARENT_SCOPE)
+    SET(FATPUP_LIBRARIES fatpup PARENT_SCOPE)
+ENDIF()
 
 IF (BUILD_CLI)
     SET(FATPUP_CLI_HEADERS test/capture_solver.h test/checkmate_solver.h test/color_scheme.h test/performance_tests.h test/possible_moves_tests.h test/rang.h test/solver.h test/utils.h)

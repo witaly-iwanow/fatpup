@@ -1,6 +1,6 @@
 #include <cassert>
 
-#include "position.h"
+#include "fatpup/position.h"
 
 namespace fatpup
 {

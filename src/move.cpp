@@ -1,7 +1,7 @@
 #include <cassert>
 
-#include "move.h"
-#include "position.h"
+#include "fatpup/move.h"
+#include "fatpup/position.h"
 
 namespace fatpup
 {

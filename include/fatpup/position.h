@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "square.h"
-#include "move.h"
+#include "fatpup/square.h"
+#include "fatpup/move.h"
 
 namespace fatpup
 {
