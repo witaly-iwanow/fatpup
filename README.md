@@ -3,4 +3,4 @@ Super lightweight portable zero-dependency chess library written in simple C++, 
 It's not a chess engine though, i.e. it won't tell you which move is the best. Fatpup objective is something like an online chess server running on Raspberry Pi handling 1M games simultaneously.
 
 ![Screenshot](screenshots/chess-game.png)
-![Screenshot](creenshots/possible-moves.png)
+![Screenshot](screenshots/possible-moves.png)
