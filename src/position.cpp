@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cassert>
+#include <cstring>
 
 #include "fatpup/position.h"
 
