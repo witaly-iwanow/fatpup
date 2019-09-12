@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 
 #include "fatpup/position.h"
 #include "solver.h"
