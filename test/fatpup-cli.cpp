@@ -1,6 +1,6 @@
 #include <cassert>
 
-#include "position.h"
+#include "fatpup/position.h"
 #include "possible_moves_tests.h"
 #include "performance_tests.h"
 

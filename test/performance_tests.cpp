@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "position.h"
+#include "fatpup/position.h"
 #include "solver.h"
 
 void runEvaluationPerformanceTests()

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "position.h"
+#include "fatpup/position.h"
 #include "color_scheme.h"
 #include "utils.h"
 

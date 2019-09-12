@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "position.h"
+#include "fatpup/position.h"
 
 class Solver
 {

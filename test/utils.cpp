@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "color_scheme.h"
-#include "position.h"
+#include "fatpup/position.h"
 
 void PrintPosition(const fatpup::Position& pos)
 {
