@@ -3,12 +3,7 @@
 
 #include "rang.h"
 
-static const int lightForegroundScheme =
-#if defined(_MSC_VER)
-    0;
-#else
-    1;
-#endif
+static const int lightForegroundScheme = 0;
 
 static const auto whitePieceColor = lightForegroundScheme ? rang::fg::red : rang::fg::reset;
 static const auto blackPieceColor = lightForegroundScheme ? rang::fg::reset : rang::fg::red;
