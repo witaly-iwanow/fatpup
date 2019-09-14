@@ -6,9 +6,6 @@
 
 #include "possible_moves_tests.h"
 
-static const auto testTitleColor = rang::fg::yellow;
-static const auto errorMsgColor = rang::fg::red;
-
 bool runPossibleMovesTests(bool verbose)
 {
     if (!runPossiblePawnMovesTests(verbose))
@@ -41,6 +38,8 @@ bool runPossibleMovesTests(bool verbose)
 
     if (!runStalemateTests(verbose))
         return false;
+
+    std::cout << successMsgColor << "  Success, all move tests passed!" << rang::fg::reset << std::endl;
 
     return true;
 }
@@ -672,13 +671,13 @@ bool runPossibleCastlingMovesTests(bool verbose)
 
     pos.square("a1") = fatpup::Rook | fatpup::White | fatpup::CanCastle;
     pos.square("a2") = fatpup::Pawn | fatpup::White;
-    pos.square("e1") = fatpup::King | fatpup::White | fatpup::CanCastle;
+    pos.square("e1") = fatpup::King | fatpup::White;
     pos.square("h1") = fatpup::Rook | fatpup::White | fatpup::CanCastle;
     pos.square("h2") = fatpup::Pawn | fatpup::White;
 
     pos.square("a8") = fatpup::Rook | fatpup::Black | fatpup::CanCastle;
     pos.square("a7") = fatpup::Pawn | fatpup::Black;
-    pos.square("e8") = fatpup::King | fatpup::Black | fatpup::CanCastle;
+    pos.square("e8") = fatpup::King | fatpup::Black;
     pos.square("h8") = fatpup::Rook | fatpup::Black | fatpup::CanCastle;
     pos.square("h7") = fatpup::Pawn | fatpup::Black;
 
@@ -775,14 +774,14 @@ bool runPossibleCastlingMovesTests(bool verbose)
 
     pos.square("a1") = fatpup::Rook | fatpup::White | fatpup::CanCastle;
     pos.square("a2") = fatpup::Pawn | fatpup::White;
-    pos.square("e1") = fatpup::King | fatpup::White | fatpup::CanCastle;
+    pos.square("e1") = fatpup::King | fatpup::White;
     pos.square("h1") = fatpup::Rook | fatpup::White | fatpup::CanCastle;
     pos.square("h2") = fatpup::Pawn | fatpup::White;
     pos.square("f1") = fatpup::Bishop | fatpup::White;
 
     pos.square("a8") = fatpup::Rook | fatpup::Black | fatpup::CanCastle;
     pos.square("a7") = fatpup::Pawn | fatpup::Black;
-    pos.square("e8") = fatpup::King | fatpup::Black | fatpup::CanCastle;
+    pos.square("e8") = fatpup::King | fatpup::Black;
     pos.square("h8") = fatpup::Rook | fatpup::Black | fatpup::CanCastle;
     pos.square("h7") = fatpup::Pawn | fatpup::Black;
     pos.square("g7") = fatpup::Bishop | fatpup::Black;
@@ -1039,8 +1038,8 @@ bool runCheckTests(bool verbose)
 
     pos.setEmpty();
 
-    pos.square("a1") = fatpup::Rook | fatpup::CanCastle | fatpup::White;
-    pos.square("e1") = fatpup::King | fatpup::CanCastle | fatpup::White;
+    pos.square("a1") = fatpup::Rook | fatpup::White | fatpup::CanCastle;
+    pos.square("e1") = fatpup::King | fatpup::White;
     pos.square("e4") = fatpup::Knight | fatpup::White;
     pos.square("f2") = fatpup::Queen | fatpup::White;
     pos.square("f3") = fatpup::Bishop | fatpup::White;

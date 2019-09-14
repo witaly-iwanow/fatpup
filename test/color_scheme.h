@@ -15,4 +15,8 @@ static const auto emptySquare =
     "\xe2\x96\x91"; // utf-8 U+2591 Light Shade
 #endif
 
+static const auto testTitleColor = rang::fg::yellow;
+static const auto errorMsgColor = rang::fg::red;
+static const auto successMsgColor = rang::fg::green;
+
 #endif // FATPUP_CLI_COLOR_SCHEME_H

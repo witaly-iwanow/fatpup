@@ -1,18 +1,20 @@
-#include <cassert>
+#include <iostream>
 
 #include "fatpup/position.h"
 #include "possible_moves_tests.h"
 #include "performance_tests.h"
-
+#include "fen_tests.h"
 
 int main(int argc, char *argv[])
 {
-    runPossibleMovesTests(true);
+    runPossibleMovesTests(false);
 
     //runEvaluationPerformanceTests();
-    //runPossibleMovesPerformanceTests();
+    //runEvaluationPerformanceTests();
 
-    runFindBestMoveTests();
+    //runFindBestMoveTests();
+
+    runFenTests();
 
     return 0;
 }

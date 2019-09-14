@@ -50,12 +50,15 @@ namespace fatpup
     class Square
     {
     public:
-        Square() : m_state(0) {}
+        Square(): m_state(0) {}
+        Square(unsigned char state): m_state(state) {}
 
         unsigned char           state() const { return m_state; }
         void                    set(unsigned char state) { m_state = state; }
         Square&                 operator = (unsigned char state) { m_state = state; return *this; }
         Square&                 operator |= (unsigned char state) { m_state |= state; return *this; }
+        bool                    operator == (const Square& rhs) const { return (m_state == rhs.m_state); }
+        bool                    operator != (const Square& rhs) const { return (m_state != rhs.m_state); }
 
         void                    setFlag(unsigned char flag, bool state) { if (state) m_state |= flag; else m_state &= ~flag; }
         bool                    isFlagSet(unsigned char flag) const { return (m_state & flag) ? true : false; }

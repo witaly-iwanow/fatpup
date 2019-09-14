@@ -17,7 +17,7 @@ namespace fatpup
 
     bool Position::isKingSafe() const
     {
-        const unsigned char white_turn = (m_board[0].state() & WhiteTurn) ? White : 0;
+        const unsigned char white_turn = (m_board[A1].state() & WhiteTurn) ? White : 0;
 
         int king_square_idx = -1;
         for (int s_idx = 0; s_idx < BOARD_SIZE * BOARD_SIZE; ++s_idx)
@@ -228,7 +228,7 @@ namespace fatpup
 
     bool Position::legalMovesPresent() const
     {
-        const unsigned char white_turn = (m_board[0].state() & WhiteTurn) ? White : 0;
+        const unsigned char white_turn = (m_board[A1].state() & WhiteTurn) ? White : 0;
         std::vector<Move> moves;
 
         for (int s_idx = 0; s_idx < BOARD_SIZE * BOARD_SIZE; ++s_idx)
@@ -930,21 +930,14 @@ namespace fatpup
 
         const Square square = m_board[square_idx];
         assert(square.piece() == King);
-
-        const int row_idx = square_idx / BOARD_SIZE;
-        const int col_idx = square_idx - row_idx * BOARD_SIZE;
-
-        Move move;
-        move.fields.src_row = row_idx;
-        move.fields.src_col = col_idx;
-
-        if (square.state() & CanCastle)
+        if ((square.isWhite() && square_idx == E1) || (!square.isWhite() && square_idx == E8))
         {
-            assert(col_idx == 4);
-            if (square.isWhite())
-                assert(row_idx == 0);
-            else
-                assert(row_idx == (BOARD_SIZE - 1));
+            const int row_idx = square_idx / BOARD_SIZE;
+            const int col_idx = square_idx - row_idx * BOARD_SIZE;
+
+            Move move;
+            move.fields.src_row = row_idx;
+            move.fields.src_col = col_idx;
 
             if (m_board[square_idx + 1].piece() == Empty && m_board[square_idx + 2].piece() == Empty && (m_board[square_idx + 3].state() & CanCastle))
             {
