@@ -9,6 +9,21 @@ namespace fatpup
     {
         Move(): raw_block(0) {}
 
+        // works only for "regular" moves, i.e. castling won't be represented correctly with
+        // just Move(ROW1, COLE, ROW1, COLG) as rook_src_col/rook_dst_col won't be set. The right
+        // way to handle it in UI is:
+        // Position pos;
+        // pos.setInitial/setFEN/etc.
+        // ...
+        // Move move;
+        // // pos.possibleMoves() returns a vector of up to 4 moves (a7a8Q, a7a8R, etc.), but in most cases it's
+        // // only one move. Most importantly, possibleMoves() will set all the fields correctly
+        // const auto moves = pos.possibleMoves(src_square_row, src_square_col, dst_square_row, dst_square_col);
+        // if (!moves.empty())
+        //     move = moves[0];
+        // else
+        //     error
+
         Move(unsigned int src_square_row, unsigned int src_square_col, unsigned int dst_square_row, unsigned int dst_square_col):
             raw_block(0)
         {
@@ -18,8 +33,12 @@ namespace fatpup
             fields.dst_col = dst_square_col;
         }
 
+        bool isEmpty() const { return !raw_block; }
+        void setEmpty() { raw_block = 0; }
+
         // for debugging/testing purposes, so that you can set a position up like this: "pos += Move("e2e4");"
-        // castling, en passant capturings and promotions are not currently supported
+        // note that it will work only for "regular" moves, i.e. castling won't be represented correctly with
+        // just Move("e1g1") as rook_src_col/rook_dst_col won't be set
         Move(const std::string& move_string);
 
         struct
