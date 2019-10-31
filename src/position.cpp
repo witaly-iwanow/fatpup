@@ -126,7 +126,11 @@ namespace fatpup
 
         // castling availability
         if (guardedFen[sym_idx] == '-')
+        {
+            if (guardedFen[++sym_idx] != ' ')
+                return false;
             ++sym_idx;
+        }
         else
         {
             char sym = guardedFen[sym_idx++];

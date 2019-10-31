@@ -59,6 +59,12 @@ bool runFenTests()
         return false;
     }
 
+    if (!pos.setFEN("1r4k1/5Npp/4Q3/8/8/8/6K1/8 w - -"))
+    {
+        std::cout << "Failed, terminating..." << std::endl;
+        return false;
+    }
+
 
     std::cout << testTitleColor << "FEN Parsing Robustness Test" << rang::fg::reset << std::endl;
 
