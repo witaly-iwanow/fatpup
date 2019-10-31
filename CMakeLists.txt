@@ -5,7 +5,7 @@ option(BUILD_TEST           "Build unit tests"              OFF)
 option(BUILD_EXAMPLES       "Build examples"                OFF)
 
 if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug)
+    set(CMAKE_BUILD_TYPE Release)
     add_definitions(-DNDEBUG)
 endif()
 
