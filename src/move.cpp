@@ -18,4 +18,10 @@ namespace fatpup
         fields.dst_row = symbolToRowIdx(dst_square[1]);
         fields.dst_col = symbolToColumnIdx(dst_square[0]);
     }
+
+    bool Move::operator == (const Move& rhs) const
+    {
+        return (rhs.raw_block == raw_block);
+    }
+
 }   // namespace fatpup

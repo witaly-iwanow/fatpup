@@ -41,6 +41,9 @@ namespace fatpup
         // just Move("e1g1") as rook_src_col/rook_dst_col won't be set
         Move(const std::string& move_string);
 
+        bool operator == (const Move& rhs) const;
+        bool operator != (const Move& rhs) const { return !(*this == rhs); }
+
         struct
         {
             unsigned int    src_row : 3;
