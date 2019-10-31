@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(fatpup)
 
-option(BUILD_TEST           "Build unit tests"              OFF)
+option(BUILD_TESTS          "Build unit tests"              OFF)
 option(BUILD_EXAMPLES       "Build examples"                OFF)
 
 if (NOT CMAKE_BUILD_TYPE)
@@ -12,8 +12,16 @@ endif()
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_STANDARD 11)
 
-set(FATPUP_HEADERS include/fatpup/move.h include/fatpup/position.h include/fatpup/square.h)
-set(FATPUP_SOURCES src/move.cpp src/position.cpp src/position_moves.cpp src/position_utils.cpp)
+set(FATPUP_HEADERS engines/minimax.h include/fatpup/engine.h include/fatpup/move.h include/fatpup/position.h include/fatpup/square.h)
+set(FATPUP_SOURCES engines/engine.cpp engines/minimax.cpp src/move.cpp src/position.cpp src/position_moves.cpp src/position_utils.cpp)
+if (BUILD_TESTS)
+    ADD_DEFINITIONS(-DBUILD_TESTS)
+    set(FATPUP_SOURCES ${FATPUP_SOURCES} engines/minimax_test.cpp)
+endif()
+
+if (BUILD_EXAMPLES)
+    ADD_DEFINITIONS(-DBUILD_EXAMPLES)
+endif()
 
 add_library(fatpup STATIC ${FATPUP_HEADERS} ${FATPUP_SOURCES})
 target_include_directories(fatpup PUBLIC include)
@@ -24,11 +32,11 @@ if (hasParent)
     set(FATPUP_LIBRARIES fatpup PARENT_SCOPE)
 endif()
 
-if (BUILD_TEST)
+if (BUILD_TESTS)
     add_subdirectory(test)
 endif()
 
-if (BUILD_EXAMPLE)
+if (BUILD_EXAMPLES)
     # coming up soon
-    add_subdirectory(example)
+    add_subdirectory(examples)
 endif()
