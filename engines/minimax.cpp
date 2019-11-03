@@ -27,18 +27,6 @@ public:
 };
 
 
-MinimaxEngine::MinimaxEngine()
-{
-#if defined(BUILD_TESTS)
-    static bool firstCall = true;
-    if (firstCall)
-    {
-        firstCall = false;
-        RunTests();
-    }
-#endif
-}
-
 int MinimaxEngine::SetPosition(const Position& pos)
 {
     _pos = pos;

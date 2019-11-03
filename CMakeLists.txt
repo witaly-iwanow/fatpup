@@ -3,6 +3,12 @@ project(fatpup)
 
 option(BUILD_TESTS          "Build unit tests"              OFF)
 option(BUILD_EXAMPLES       "Build examples"                OFF)
+if (BUILD_TESTS)
+    ADD_DEFINITIONS(-DBUILD_TESTS)
+endif()
+if (BUILD_EXAMPLES)
+    ADD_DEFINITIONS(-DBUILD_EXAMPLES)
+endif()
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -14,14 +20,6 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(FATPUP_HEADERS engines/minimax.h include/fatpup/engine.h include/fatpup/move.h include/fatpup/position.h include/fatpup/square.h)
 set(FATPUP_SOURCES engines/engine.cpp engines/minimax.cpp src/move.cpp src/position.cpp src/position_moves.cpp src/position_utils.cpp)
-if (BUILD_TESTS)
-    ADD_DEFINITIONS(-DBUILD_TESTS)
-    set(FATPUP_SOURCES ${FATPUP_SOURCES} engines/minimax_test.cpp)
-endif()
-
-if (BUILD_EXAMPLES)
-    ADD_DEFINITIONS(-DBUILD_EXAMPLES)
-endif()
 
 add_library(fatpup STATIC ${FATPUP_HEADERS} ${FATPUP_SOURCES})
 target_include_directories(fatpup PUBLIC include)

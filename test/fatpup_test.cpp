@@ -4,6 +4,7 @@
 #include "possible_moves_tests.h"
 #include "performance_tests.h"
 #include "fen_tests.h"
+#include "minimax_tests.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,9 @@ int main(int argc, char *argv[])
     //runFindBestMoveTests();
 
     runFenTests();
+
+    // engine tests
+    runMinimaxTests(true);
 
     return 0;
 }

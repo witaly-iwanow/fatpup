@@ -9,7 +9,7 @@ namespace fatpup
 class MinimaxEngine: public Engine
 {
 public:
-    MinimaxEngine();
+    MinimaxEngine() {}
 
     int SetPosition(const Position& pos) override;
 
@@ -19,13 +19,10 @@ public:
     Move GetBestMove() override;
     void MoveDone(Move move) override;
 
+    // for unit testing solely
+    static Move FindBestMove(const Position& position, int& afterMoveEval, int currentDepth, int maxDepth);
+
 private:
-    Move FindBestMove(const Position& position, int& afterMoveEval, int currentDepth, int maxDepth);
-
-#if defined(BUILD_TESTS)
-    int RunTests();
-#endif
-
     Position _pos;
     Move _bestMove;
 };
