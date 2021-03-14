@@ -54,6 +54,18 @@ namespace fatpup
         return result;
     }
 
+    bool Position::isMoveCapture(Move move) const
+    {
+        const Square& src_square = square(move.fields.src_row, move.fields.src_col);
+        const Square& dst_square = square(move.fields.dst_row, move.fields.dst_col);
+
+        // NB: in the case of en passant capturing the pawn moves to an empty square
+        if (dst_square.piece() != Empty || (src_square.piece() == Pawn && move.fields.src_col != move.fields.dst_col))
+            return true;
+
+        return false;
+    }
+
 
     std::string Position::moveToStringPGN(Move move) const
     {

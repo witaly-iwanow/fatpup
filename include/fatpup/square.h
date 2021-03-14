@@ -37,6 +37,13 @@ namespace fatpup
         PieceMask = 7
     };
 
+    constexpr int PawnValue = 1;
+    constexpr int KnightValue = 3;
+    constexpr int BishopValue = 3;
+    constexpr int RookValue = 5;
+    constexpr int QueenValue = 9;
+    constexpr int KingValue = 2;
+
     enum
     {
         Black = 0,          // just a stub for consistency (square1 = Pawn | White; square2 = Pawn | Black;)
@@ -80,12 +87,12 @@ namespace fatpup
             int val;
             switch (piece)
             {
-            case Pawn: val = 1; break;
-            case Knight: val = 3; break;
-            case Bishop: val = 3; break;
-            case Rook: val = 5; break;
-            case Queen: val = 9; break;
-            default: val = 1000;
+            case Pawn: val = PawnValue; break;
+            case Knight: val = KnightValue; break;
+            case Bishop: val = BishopValue; break;
+            case Rook: val = RookValue; break;
+            case Queen: val = QueenValue; break;
+            default: val = KingValue;
             }
 
             return (m_state & White) ? val : -val;

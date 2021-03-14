@@ -19,10 +19,9 @@ public:
     Move GetBestMove() override;
     void MoveDone(Move move) override;
 
-    // for unit testing solely
-    static Move FindBestMove(const Position& position, int& afterMoveEval, int currentDepth, int maxDepth);
-
 private:
+    static Move FindBestMove(const Position& position, int& afterMoveEval, int currentDepth);
+
     Position _pos;
     Move _bestMove;
 };

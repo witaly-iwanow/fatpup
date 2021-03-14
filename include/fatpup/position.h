@@ -24,7 +24,24 @@ namespace fatpup
         A8 = 56, B8 = 57, C8 = 58, D8 = 59, E8 = 60, F8 = 61, G8 = 62, H8 = 63
     };
 
-    inline int rowColToIdx(int row_idx, int col_idx) { return row_idx * BOARD_SIZE + col_idx; }
+    inline int rowColToIdx(int row_idx, int col_idx)
+    {
+        assert(row_idx >= ROW1 && row_idx <= ROW8);
+        assert(col_idx >= COLA && col_idx <= COLH);
+        return row_idx * BOARD_SIZE + col_idx;
+    }
+
+    struct RowCol
+    {
+        int row;
+        int col;
+    };
+    inline RowCol idxToRowCol(int square_idx)
+    {
+        static_assert(!((BOARD_SIZE - 1) & BOARD_SIZE), "BOARD_SIZE shall be power of 2");
+        assert(square_idx >= A1 && square_idx <= H8);
+        return RowCol{square_idx / BOARD_SIZE, square_idx & (BOARD_SIZE - 1)};
+    }
 
     class Position
     {
@@ -73,6 +90,7 @@ namespace fatpup
 
         std::string         moveToString(Move move) const;
         std::string         moveToStringPGN(Move move) const;
+        bool                isMoveCapture(Move move) const;
 
         // to do:
         // bool isLegal() - two kings of diff colors, less than 8 pawns of each color, no pawns on first/last rows, etc.
