@@ -3,6 +3,7 @@ project(fatpup)
 
 option(BUILD_TESTS          "Build unit tests"              OFF)
 option(BUILD_EXAMPLES       "Build examples"                OFF)
+option(BUILD_UCI            "Build UCI executable"          ON)
 if (BUILD_TESTS)
     ADD_DEFINITIONS(-DBUILD_TESTS)
 endif()
@@ -23,6 +24,11 @@ set(FATPUP_SOURCES engines/engine.cpp engines/minimax.cpp src/move.cpp src/posit
 
 add_library(fatpup STATIC ${FATPUP_HEADERS} ${FATPUP_SOURCES})
 target_include_directories(fatpup PUBLIC include)
+
+if (BUILD_UCI)
+    add_executable(fatpup_uci engines/uci_main.cpp)
+    target_link_libraries(fatpup_uci PRIVATE fatpup)
+endif()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if (hasParent)

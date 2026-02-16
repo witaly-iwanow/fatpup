@@ -1,3 +1,4 @@
+/build
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
@@ -8,4 +9,3 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 .DS_Store
-
