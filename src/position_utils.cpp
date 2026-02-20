@@ -81,8 +81,72 @@ namespace fatpup
         }
         else
         {
-            assert(0);  // to do
+            const Square& src_square = square(move.fields.src_row, move.fields.src_col);
+            const unsigned char piece = src_square.piece();
+            const bool capture = isMoveCapture(move);
+
+            if (piece != Pawn)
+            {
+                result += pieceSymbols[piece];
+
+                bool ambiguous = false;
+                bool same_file = false;
+                bool same_rank = false;
+
+                const std::vector<Move> all_moves = possibleMoves();
+                for (const auto& candidate : all_moves)
+                {
+                    if (candidate.fields.src_row == move.fields.src_row && candidate.fields.src_col == move.fields.src_col)
+                        continue;
+                    if (candidate.fields.dst_row != move.fields.dst_row || candidate.fields.dst_col != move.fields.dst_col)
+                        continue;
+
+                    const Square& candidate_src_square = square(candidate.fields.src_row, candidate.fields.src_col);
+                    if (candidate_src_square.piece() != piece)
+                        continue;
+
+                    ambiguous = true;
+                    if (candidate.fields.src_col == move.fields.src_col)
+                        same_file = true;
+                    if (candidate.fields.src_row == move.fields.src_row)
+                        same_rank = true;
+                }
+
+                if (ambiguous)
+                {
+                    if (!same_file)
+                        result += (char)((int)('a') + move.fields.src_col);
+                    else if (!same_rank)
+                        result += (char)((int)('1') + move.fields.src_row);
+                    else
+                    {
+                        result += (char)((int)('a') + move.fields.src_col);
+                        result += (char)((int)('1') + move.fields.src_row);
+                    }
+                }
+            }
+            else if (capture)
+                result += (char)((int)('a') + move.fields.src_col);
+
+            if (capture)
+                result += "x";
+
+            result += (char)((int)('a') + move.fields.dst_col);
+            result += (char)((int)('1') + move.fields.dst_row);
+
+            if (move.fields.promoted_to > Pawn)
+            {
+                result += "=";
+                result += pieceSymbols[move.fields.promoted_to];
+            }
         }
+
+        const Position new_pos(*this, move);
+        Position::State state = new_pos.getState();
+        if (state == Position::State::Checkmate)
+            result += "#";
+        else if (state == Position::State::Check)
+            result += "+";
 
         return result;
     }
